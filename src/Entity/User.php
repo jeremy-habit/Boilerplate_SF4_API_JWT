@@ -42,10 +42,9 @@ class User implements UserInterface
    */
   private $roles;
 
-  public function __construct($username)
+  public function __construct()
   {
     $this->isActive = true;
-    $this->username = $username;
     $this->addRoles("ROLE_USER");
   }
 
