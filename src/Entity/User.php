@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
   /**
    * @ORM\Id()
@@ -28,7 +28,7 @@ class User implements UserInterface
   private $password;
 
   /**
-   * @ORM\Column(type="string", unique=true)
+   * @ORM\Column(type="string", length=254, unique=true)
    */
   private $email;
 
@@ -51,6 +51,11 @@ class User implements UserInterface
   public function getUsername()
   {
     return $this->username;
+  }
+
+  public function setUsername($username)
+  {
+    $this->username = $username;
   }
 
   public function getSalt()
@@ -139,4 +144,40 @@ class User implements UserInterface
     $this->roles[] = $role;
   }
 
+  /**
+   * String representation of object
+   * @link http://php.net/manual/en/serializable.serialize.php
+   * @return string the string representation of the object or null
+   * @since 5.1.0
+   */
+  public function serialize()
+  {
+    return serialize(array(
+      $this->id,
+      $this->username,
+      $this->password,
+      // see section on salt below
+      // $this->salt,
+    ));
+  }
+
+  /**
+   * Constructs the object
+   * @link http://php.net/manual/en/serializable.unserialize.php
+   * @param string $serialized <p>
+   * The string representation of the object.
+   * </p>
+   * @return void
+   * @since 5.1.0
+   */
+  public function unserialize($serialized)
+  {
+    list (
+      $this->id,
+      $this->username,
+      $this->password,
+      // see section on salt below
+      // $this->salt
+      ) = unserialize($serialized, array('allowed_classes' => false));
+  }
 }

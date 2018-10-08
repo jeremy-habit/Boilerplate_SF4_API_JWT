@@ -2,20 +2,20 @@
 
 ## Get Started
 
-### Clone the project :
+### Clone the project
 
 ```bash
 $ git clone https://github.com/jeremy-habit/Boilerplate_SF4_API_JWT.git
 ```
 
-### Install dependencies :
+### Install dependencies
 
 ```bash
 $ cd Boilerplate_SF4_API_JWT
 $ composer install
 ```
 
-### Create the database schema :
+### Create the database schema
 
 * Start by configure Doctrine's params in the .env file :
 > DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
@@ -26,24 +26,7 @@ $ php bin/console doctrine:database:create
 $ php bin/console doctrine:schema:update --force
 ```
 
-### Load fixtures :
-
-```bash
-$ php bin/console doctrine:fixtures:load
-```
-
-Note that you can add an user via the following route : \<ServerAddress>/register. (The server must be running !)
-You have to post some params, let's see an example :
-
-```json
-{
-	"username" : "John Doe",
-	"password": "myPassword",
-	"email": "John.Doe@gmail.com"
-}
-```
-
-### Generate the SSH keys (from LexikJWTAuthenticationBundle):
+### Generate the SSH keys (from LexikJWTAuthenticationBundle
 
 ```bash
 $ mkdir -p config/jwt # For Symfony3+, no need of the -p option
@@ -59,25 +42,62 @@ $ mv config/jwt/private.pem config/jwt/private.pem-back
 $ mv config/jwt/private2.pem config/jwt/private.pem
 ```
 
-## Usage :
+## Usage
 
-### Run the web server :
+### Run the web server
 
 ```bash
 $ php bin/console server:run
 ```
 
-### Get a JWT token :
+### Register a new user
 
-\<ServerAddress>/login_check. You have to post some params, let's see an example :
-Note that in this case the username key target the email's value of the user because I configured it in the secrutiy.yml with the tag "\<property>" inside the entity_provider section. Remove it if you want to target the username and not the email.
+> Params example
+
 ```json
 {
-	"username": "John.Doe@gmail.com",
+	"username" : "John Doe",
+	"password": "myPassword",
+	"email": "john.doe@gmail.com"
+}
+```
+
+> With curl
+
+````bash
+$ curl -X POST http://localhost:8000/register -d "{\"username\":\"john\",\"password\":\"doe\",\"email\":\"john.doe@gmail.com\"}" -H "Content-Typ
+e: application/json"
+````
+
+> Or use fixtures
+
+```bash
+$ php bin/console doctrine:fixtures:load
+```
+
+### Get a JWT token
+
+
+> Params example
+
+```json
+{
+	"username" : "John.Doe@gmail.com",
 	"password": "myPassword"
 }
 ```
 
-### Access a secured route :
+> With curl
 
---coming soon--
+Note that in this case the username key target the email's value of the user because I configured it in the secrutiy.yml with the tag "\<property>" inside the entity_provider section. Remove it if you want to target the username and not the email.
+
+````bash
+$ curl -X POST http://localhost:8000/login_check -d "{\"username\":\"john.doe@gmail.com\",\"password\":\"myPassword\"}" -H "Content-Typ
+e: application/json"
+````
+
+### Access a secured route
+
+````bash
+$ curl -H "Authorization: Bearer <token here>" http://localhost:8000/api
+````

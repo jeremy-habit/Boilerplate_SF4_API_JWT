@@ -38,16 +38,18 @@ abstract class AbstractController
   {
     return $this->em;
   }
-/*
-  protected function sendViolationErrors(ConstraintViolationListInterface $validationErrors, int $errorCode)
-  {
-    $result["code"] = $errorCode;
-    foreach ($validationErrors as $key => $validationError) {
-      $result["message"][$key][] = $validationError->getPropertyPath();
-      $result["message"][$key][] = $validationError->getMessage();
-    }
-    return $result;
-  }*/
+
+
+  /*
+    protected function sendViolationErrors(ConstraintViolationListInterface $validationErrors, int $errorCode)
+    {
+      $result["code"] = $errorCode;
+      foreach ($validationErrors as $key => $validationError) {
+        $result["message"][$key][] = $validationError->getPropertyPath();
+        $result["message"][$key][] = $validationError->getMessage();
+      }
+      return $result;
+    }*/
 
   protected function sendJsonResponse($data, $code = Response::HTTP_OK)
   {

@@ -23,4 +23,10 @@ class UserController extends AbstractController
     $userManager->create($user);
     return new JsonResponse();
   }
+
+  public function api()
+  {
+    return new JsonResponse(sprintf('Logged in as %s', $this->getUser()->getUsername()));
+  }
+
 }

@@ -13,5 +13,5 @@ login_check:
 
 api:
     path: /api
-    controller: App\Controller\DefaultController::api
+    controller: App\Controller\UserController::api
 
