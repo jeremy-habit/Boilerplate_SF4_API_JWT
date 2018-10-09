@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
@@ -39,7 +40,6 @@ abstract class AbstractController
     return $this->em;
   }
 
-
   /*
     protected function sendViolationErrors(ConstraintViolationListInterface $validationErrors, int $errorCode)
     {
@@ -53,8 +53,6 @@ abstract class AbstractController
 
   protected function sendJsonResponse($data, $code = Response::HTTP_OK)
   {
-    $result["code"] = $code;
-    $result["message"] = $data;
-    return $result;
+    return new JsonResponse(array_merge(["code" => $code], $data), $code);
   }
 }

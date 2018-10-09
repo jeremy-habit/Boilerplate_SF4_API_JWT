@@ -7,7 +7,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Entity\User;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends AbstractController
 {
@@ -23,7 +22,7 @@ class AuthController extends AbstractController
   public function register(User $user, AuthManager $auth)
   {
     $auth->register($user);
-    return new JsonResponse(["message" => "User added successfully", "last_insert_id" => $user->getId()], Response::HTTP_OK);
+    return $this->sendJsonResponse(["message" => "User added successfully", "last_insert_id" => $user->getId()]);
   }
 
   /**
@@ -33,10 +32,7 @@ class AuthController extends AbstractController
    */
   public function loggedConfirm()
   {
-    return new JsonResponse(
-      ["message" => sprintf('Logged in as %s', $this->getUser()), "user" => $this->getUser()],
-      Response::HTTP_OK
-    );
+    return $this->sendJsonResponse(["message" => sprintf('Logged in as %s', $this->getUser()), "user" => $this->getUser()]);
   }
 
 }
