@@ -1,4 +1,3 @@
-* migrations
 * listeners and ???
 * cors ?
 * update or install dependencies ?
