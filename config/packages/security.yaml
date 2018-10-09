@@ -28,8 +28,8 @@ security:
             stateless: true
             anonymous: true
 
-        api:
-            pattern:  ^/api
+        logged_confirm:
+            pattern:  ^/logged_confirm
             stateless: true
             anonymous: false
             provider: entity_provider
@@ -40,4 +40,4 @@ security:
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/logged_confirm, roles: IS_AUTHENTICATED_FULLY }

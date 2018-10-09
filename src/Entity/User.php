@@ -23,6 +23,16 @@ class User implements UserInterface, \Serializable
   private $username;
 
   /**
+   * @ORM\Column(type="string", length=25)
+   */
+  private $lastName;
+
+  /**
+   * @ORM\Column(type="string", length=25)
+   */
+  private $firstName;
+
+  /**
    * @ORM\Column(type="string", length=500)
    */
   private $password;
@@ -44,8 +54,11 @@ class User implements UserInterface, \Serializable
 
   public function __construct()
   {
-    $this->isActive = true;
-    $this->addRoles("ROLE_USER");
+  }
+
+  public function __toString()
+  {
+    return sprintf($this->username);
   }
 
   public function getUsername()
@@ -56,6 +69,38 @@ class User implements UserInterface, \Serializable
   public function setUsername($username)
   {
     $this->username = $username;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getLastName()
+  {
+    return $this->lastName;
+  }
+
+  /**
+   * @param mixed $lastName
+   */
+  public function setLastName($lastName): void
+  {
+    $this->lastName = $lastName;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getFirstName()
+  {
+    return $this->firstName;
+  }
+
+  /**
+   * @param mixed $firstName
+   */
+  public function setFirstName($firstName): void
+  {
+    $this->firstName = $firstName;
   }
 
   public function getSalt()
@@ -139,7 +184,7 @@ class User implements UserInterface, \Serializable
     $this->roles = $roles;
   }
 
-  public function addRoles(String $role): void
+  public function addRole(String $role): void
   {
     $this->roles[] = $role;
   }

@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserFixtures extends Fixture /* implements DependentFixtureInterface */
 {
 
- /* public const USER_REF_1 = "user_ref_1";*/
+  /* public const USER_REF_1 = "user_ref_1";*/
 
   private $encoder;
 
@@ -29,6 +29,10 @@ class UserFixtures extends Fixture /* implements DependentFixtureInterface */
     // creation of 2 users
     for ($i = 0; $i < 2; $i++) {
       $user = new User();
+      $user->setIsActive(true);
+      $user->addRole("ROLE_USER");
+      $user->setLastName($faker->lastName);
+      $user->setFirstName($faker->firstName);
       $user->setUsername($faker->userName);
       $user->setEmail($faker->email);
       $user->setPassword($this->encoder->encodePassword($user, 'password'));

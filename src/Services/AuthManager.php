@@ -2,13 +2,12 @@
 
 namespace App\Services;
 
-
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserManager
+class AuthManager
 {
 
   private $em;
@@ -34,27 +33,19 @@ class UserManager
   /**
    * @param User $user
    * @return User
+   * @throws \Exception
    */
-  public function create(User $user)
-  {
-    $user->__construct();
-    /* $generatedPassword = $this->generatePassword();*/
-    $user->setPassword($this->encoder->encodePassword($user, $user->getPassword()));
-    $this->em->persist($user);
-    $this->em->flush();
-    return $user;
-  }
-
-  /**
-   * Generate random password
-   * @return string
-   */
-  private function generatePassword()
+  public function register(User $user)
   {
     try {
-      return bin2hex(random_bytes(10));
-    } catch (\Exception $e) {
-      return $e->getMessage();
+      $user->setIsActive(true);
+      $user->addRole("ROLE_USER");
+      $user->setPassword($this->encoder->encodePassword($user, $user->getPassword()));
+      $this->em->persist($user);
+      $this->em->flush();
+      return $user;
+    } catch (\Exception $exception) {
+      throw $exception;
     }
   }
 }

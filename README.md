@@ -57,15 +57,17 @@ $ php bin/console server:run
 ```json
 {
 	"username" : "John Doe",
-	"password": "myPassword",
-	"email": "john.doe@gmail.com"
+	"password" : "myPassword",
+	"email" : "john.doe@gmail.com",
+	"last_name" : "Doe",
+	"first_name" : "John"
 }
 ```
 
 > With curl
 
 ````bash
-$ curl -X POST http://localhost:8000/register -d "{\"username\":\"john\",\"password\":\"doe\",\"email\":\"john.doe@gmail.com\"}" -H "Content-Typ
+$ curl -X POST http://localhost:8000/register -d "{\"username\":\"john\",\"password\":\"doe\",\"email\":\"john.doe@gmail.com\",\"last_name\":\"Doe\",\"first_name\":\"John\"}" -H "Content-Typ
 e: application/json"
 ````
 
