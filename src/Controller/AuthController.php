@@ -27,12 +27,22 @@ class AuthController extends AbstractController
 
   /**
    * @Rest\View()
-   * @Rest\Get("/logged_confirm")
+   * @Rest\Get("/api")
    * @return JsonResponse
    */
   public function loggedConfirm()
   {
     return $this->sendJsonResponse(["message" => sprintf('Logged in as %s', $this->getUser()), "user" => $this->getUser()]);
+  }
+
+  /**
+   * @Rest\View()
+   * @Rest\Get("/api/cosmos")
+   * @return JsonResponse
+   */
+  public function cosmos()
+  {
+    return $this->sendJsonResponse(["message" => "humm ?"]);
   }
 
 }
